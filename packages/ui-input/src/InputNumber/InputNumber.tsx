@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { cn } from '../utils/cn'
@@ -89,7 +88,7 @@ export const InputNumber = <T extends FieldValues>({
         if (Number(value) >= Number(numberConfirm) && !confirm && popupConfirm) {
             setOpenPopup(true)
         }
-    }, [value])
+    }, [value, numberConfirm, confirm, popupConfirm])
 
     return (
         <div className={className}>
@@ -111,7 +110,7 @@ export const InputNumber = <T extends FieldValues>({
                 <input
                     onChange={(e) => {
                         handleChange(e)
-                        onChangeValue && onChangeValue(e)
+                        onChangeValue?.(e)
                     }}
                     onKeyDown={handleKeyDown}
                     className={cn(
@@ -127,7 +126,8 @@ export const InputNumber = <T extends FieldValues>({
                     {...restParams}
                 />
 
-                <style jsx>
+                {/* eslint-disable-next-line react/no-unknown-property */}
+                <style jsx={true}>
                     {`
                         input::-webkit-outer-spin-button,
                         input::-webkit-inner-spin-button {

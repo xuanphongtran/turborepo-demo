@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { cn } from '../utils/cn'
@@ -9,7 +8,7 @@ import { forwardRef, useState } from 'react'
 import type { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-    errorMessage?: string | any
+    errorMessage?: string | Record<string, unknown>
     classNameInput?: string
     classNameError?: string
     classNameIcon?: string
@@ -25,7 +24,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     viewIcon?: ReactNode
     hideIcon?: ReactNode
     // glbvisa props
-    register?: UseFormRegister<any>
+    register?: UseFormRegister<Record<string, unknown>>
     rules?: RegisterOptions
     autocomplete?: string
     showCvvToolTips?: boolean
@@ -119,7 +118,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                         ref={ref}
                         onChange={(e) => {
                             handleChange(e)
-                            restParams?.onChange && restParams?.onChange(e)
+                            restParams?.onChange?.(e)
                         }}
                         type={handleType()}
                         className={cn(
@@ -132,7 +131,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                         {...restParams}
                     />
 
-                    <style jsx>
+                    {/* eslint-disable-next-line react/no-unknown-property */}
+                    <style jsx={true}>
                         {`
                             input::-webkit-outer-spin-button,
                             input::-webkit-inner-spin-button {
@@ -211,7 +211,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
                     ref={registerResult?.ref || ref}
                     onChange={(e) => {
                         handleChange(e)
-                        restParams?.onChange && restParams?.onChange(e)
+                        restParams?.onChange?.(e)
                     }}
                 />
                 {inputIcon && (

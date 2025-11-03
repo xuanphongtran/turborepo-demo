@@ -7,8 +7,7 @@ interface InputFileProps {
   setFile: Dispatch<SetStateAction<File[]>>
   name: string
   nameButton?: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setError?: UseFormSetError<any>
+  setError?: UseFormSetError<Record<string, unknown>>
   errorMessage?: string
   classNameError?: string
   nameLabel?: string
@@ -55,12 +54,12 @@ export default function InputFile({
         const fileSizeMB = file.size / (1024 * 1024)
 
         if (fileSizeMB > 20) {
-          setError && setError(name, { message: '<= 20MB/file' })
+          setError?.(name, { message: '<= 20MB/file' })
         } else if (!listFileAccept.includes(extensionToMimeType[fileExtension])) {
-          setError && setError(name, { message: 'Your file is invalid.' })
+          setError?.(name, { message: 'Your file is invalid.' })
         } else {
           setFile((prev) => [...prev, file])
-          setError && setError(name, { message: '' })
+          setError?.(name, { message: '' })
         }
       })
     }
@@ -83,8 +82,9 @@ export default function InputFile({
           accept='.jpg, .jpeg, .png, .gif, .bmp, .pdf, .txt, .doc, .docx, .xls, .xlsx'
           ref={fileInputRef}
           onChange={onFileChange}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          onClick={(event: React.MouseEvent<HTMLInputElement, MouseEvent>) => ((event.target as any).value = null)}
+          onClick={(event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+            ;(event.target as HTMLInputElement).value = ''
+          }}
           multiple
         />
         <button

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { cn } from '../utils/cn'
@@ -158,6 +157,7 @@ export const PhoneInputNumber = <T extends FieldValues>({
                 input.removeEventListener('change', handlePhoneNumber)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [phoneField.value])
 
     return (

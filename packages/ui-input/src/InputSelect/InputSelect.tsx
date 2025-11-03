@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { useMounted } from '../hooks/useMounted'
@@ -69,7 +68,7 @@ interface InputSelectProps {
     variant?: '1ibc' | 'glbvisa'
     height?: string
     startIcon?: ReactNode
-    filterOption?: (option: any, inputValue: string) => boolean
+    filterOption?: (option: SelectOptionProps | GroupSelectOptions, inputValue: string) => boolean
 }
 
 export const InputSelect = <T extends FieldValues>(props: UseControllerProps<T> & InputSelectProps) => {
@@ -284,7 +283,7 @@ export const InputSelect = <T extends FieldValues>(props: UseControllerProps<T> 
 
     const onChange = (selectedOption: unknown | SelectOptionProps) => {
         field.onChange(selectedOption)
-        onSelect && onSelect(selectedOption as SelectOptionProps)
+        onSelect?.(selectedOption as SelectOptionProps)
     }
 
     const isMounted = useMounted()
@@ -293,6 +292,7 @@ export const InputSelect = <T extends FieldValues>(props: UseControllerProps<T> 
         if (defaultValue) {
             onChange(defaultValue)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultValue])
 
     return (
@@ -338,7 +338,12 @@ export const InputSelect = <T extends FieldValues>(props: UseControllerProps<T> 
                                 Option: IconOption,
                                 Input,
                                 ...(variant === 'glbvisa' && startIcon
-                                    ? { Control: (props: any) => <ControlWithIcon {...props} startIcon={startIcon} /> }
+                                    ? {
+                                          Control: (props: {
+                                              startIcon?: ReactNode
+                                              [key: string]: unknown
+                                          }) => <ControlWithIcon {...props} startIcon={startIcon} />
+                                      }
                                     : {})
                             }}
                             onBlur={() => field && field.onBlur()}
@@ -413,8 +418,12 @@ const DropdownIndicator: React.FC<DropdownIndicatorProps & { isLeadform?: boolea
 
 const Input: React.FC<InputProps> = (props) => <components.Input {...props} autoComplete='off' />
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ControlWithIcon: React.FC<any> = (props) => {
+interface ControlWithIconProps {
+    startIcon?: ReactNode
+    [key: string]: unknown
+}
+
+const ControlWithIcon: React.FC<ControlWithIconProps> = (props) => {
     const { startIcon } = props
     return (
         <div className='relative'>
@@ -428,8 +437,12 @@ const ControlWithIcon: React.FC<any> = (props) => {
     )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const IconOption: React.FC<any> = (props) => {
+interface IconOptionProps {
+    data: SelectOptionProps
+    [key: string]: unknown
+}
+
+const IconOption: React.FC<IconOptionProps> = (props) => {
     return (
         <components.Option {...props} className='!flex items-center justify-start gap-2'>
             {props.data.icon && (
