@@ -1,3 +1,6 @@
 [submodule "apps/1ibc"]
 	path = apps/1ibc
 	url = git@github.com:xuanphongtran/1ibc5.git
+[submodule "apps/glbvisa"]
+	path = apps/glbvisa
+	url = https://github.com/xuanphongtran/glbvisa
