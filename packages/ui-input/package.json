@@ -1,0 +1,37 @@
+{
+  "name": "@repo/ui-input",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./*": "./src/*.tsx",
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "clsx": "^2.1.1",
+    "intl-tel-input": "^18.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.53.2",
+    "react-select": "^5.8.3",
+    "tailwind-merge": "^2.5.5"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/intl-tel-input": "^18.1.4",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.1",
+    "@types/react-select": "^5.0.1",
+    "eslint": "^9.38.0",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "next": ">=14.0.0"
+  }
+}
